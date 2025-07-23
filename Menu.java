@@ -1,7 +1,9 @@
 import java.util.Scanner;
+import java.io.*;
 
 public class Menu {
     public static void main(String[] args) {
+        // Menu system
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n\nMAIN MENU");
         System.out.println("***************************************");
@@ -11,14 +13,15 @@ public class Menu {
         System.out.println("4. Read object data from a database");
         System.out.print("\nYour choice:\n> ");
 
+        // Will continue until valid input is received
         while (true) {
             String choice = scanner.nextLine();
 
             if (choice.equals("1")) {
-                SaveToFile();
+                SaveToFile(scanner);
                 break;
             } else if (choice.equals("2")) {
-                SaveToDatabase();
+                SaveToDatabase(scanner);
                 break;
             } else if (choice.equals("3")) {
                 ReadFromFile();
@@ -35,11 +38,42 @@ public class Menu {
 
     }
 
-    public static void SaveToFile() {
-        // Implement logic to save objects to a file
+    public static void SaveToFile(Scanner scanner) {
+        // Create drug object
+        // string name, double cost, double dosage
+        System.out.print("Drug ID: ");
+        int id = scanner.nextInt();
+
+        scanner.nextLine(); // Buffer
+        System.out.print("Drug name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Drug cost: ");
+        double cost = scanner.nextDouble();
+
+        System.out.print("Drug dosage: ");
+        double dosage = scanner.nextDouble();
+
+        Drug drug = new Drug(id, name, cost, dosage);
+        System.out.println(drug);
+
+        // Serialize object to file
+        try {
+            FileOutputStream fout = new FileOutputStream("Drugs.txt");
+            ObjectOutputStream ObjOut = new ObjectOutputStream(fout);
+
+            ObjOut.writeObject(drug);
+
+            ObjOut.close();
+            fout.close();
+
+            System.out.println("Drug information created and stored successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void SaveToDatabase() {
+    public static void SaveToDatabase(Scanner scanner) {
         // Implement logic to save objects to an SQL Database
     }
 

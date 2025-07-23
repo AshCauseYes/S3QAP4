@@ -1,4 +1,6 @@
-public class Drug {
+import java.io.Serializable;
+
+public class Drug implements Serializable {
     // Class variables
     private int drugID;
     private String drugName;
@@ -22,19 +24,15 @@ public class Drug {
         return drugName;
     }
 
-    public double getDrugCost() {
-        return drugCost;
+    public String getDrugCost() {
+        return "$" + drugCost;
     }
 
-    public double getDosage() {
-        return dosage;
+    public String getDosage() {
+        return dosage + "mg";
     }
 
     // Setters
-    public void setDrugID(int drugID) {
-        this.drugID = drugID;
-    }
-
     public void setDrugName(String drugName) {
         this.drugName = drugName;
     }
@@ -45,5 +43,10 @@ public class Drug {
 
     public void setDosage(double dosage) {
         this.dosage = dosage;
+    }
+
+    // Methods
+    public String toString() {
+        return String.format("(ID: %d, Name: %s, Cost: $%.2f, Dosage: %.2fmg)", this.drugID, this.drugName, this.drugCost, this.dosage);
     }
 }
