@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
@@ -78,7 +79,36 @@ public class Menu {
     }
 
     public static void ReadFromFile() {
-        // Implement logic to read objects from a file
+        ArrayList<Drug> drugs = new ArrayList<>();
+
+        // Read objects from file and add them to an arraylist
+        try {
+            FileInputStream fin = new FileInputStream("Drugs.txt");
+            ObjectInputStream ObjIn = new ObjectInputStream(fin);
+            Object temp = null;
+
+            // Iterate until end of file
+            while (true) {
+                try {
+                    temp = ObjIn.readObject();
+                } 
+                catch(EOFException e) {
+                    break;
+                }
+
+                drugs.add((Drug)temp);
+            }
+
+            ObjIn.close();
+            fin.close();
+
+        } 
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return all objects
+        System.out.println(drugs);
     }
 
     public static void ReadFromDatabase() {
